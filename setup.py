@@ -8,9 +8,13 @@ import os
 
 from setuptools import setup, find_packages
 from codecs import open  # Make encoding consistent
-
+from pip.req import parse_requirements
 
 TOPLEVEL = os.path.abspath(os.path.dirname(__file__))
+
+REQUIREMENTS = parse_requirements(
+    os.path.join(TOPLEVEL, 'requirements.txt', session=False)
+)
 
 def _readfile(subpath):
     with open(os.path.join(TOPLEVEL, subpath), encoding='utf-8') as file_handle:
@@ -79,6 +83,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        str(requirement.req) for requirement in REQUIREMENTS
     ],
 
     # List additional groups of dependencies here (e.g. development
